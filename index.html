@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-100">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vizitka Yaratish</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div>
+      <h2 class="text-2xl font-bold mb-4 text-gray-700">Vizitka Ma'lumotlari</h2>
+      <form id="infoForm" class="space-y-4">
+        <input type="text" id="fullName" placeholder="Ism Familiya" class="w-full p-2 border rounded-lg" required />
+        <input type="text" id="jobTitle" placeholder="Kasbingiz" class="w-full p-2 border rounded-lg" />
+        <input type="text" id="phone" placeholder="Telefon raqami" class="w-full p-2 border rounded-lg" />
+        <input type="email" id="email" placeholder="Email" class="w-full p-2 border rounded-lg" />
+        <input type="text" id="telegram" placeholder="Telegram @username" class="w-full p-2 border rounded-lg" />
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg w-full">Vizitkani yaratish</button>
+      </form>
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold mb-4 text-gray-700">Vizitka Ko'rinishi</h2>
+      <div id="cardPreview" class="bg-white border-2 border-blue-500 rounded-xl p-6 space-y-2 shadow-md">
+        <p id="previewName" class="text-xl font-semibold text-gray-800">Ism Familiya</p>
+        <p id="previewJob" class="text-gray-600">Kasb</p>
+        <p id="previewPhone" class="text-sm">📞 Telefon</p>
+        <p id="previewEmail" class="text-sm">✉️ Email</p>
+        <p id="previewTelegram" class="text-sm">🔗 Telegram</p>
+      </div>
+      <button id="downloadBtn" class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg w-full">Yuklab olish</button>
+    </div>
+  </div>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    const form = document.getElementById('infoForm');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    form.addEventListener('input', () => {
+      document.getElementById('previewName').textContent = document.getElementById('fullName').value || 'Ism Familiya';
+      document.getElementById('previewJob').textContent = document.getElementById('jobTitle').value || 'Kasb';
+      document.getElementById('previewPhone').textContent = '📞 ' + (document.getElementById('phone').value || 'Telefon');
+      document.getElementById('previewEmail').textContent = '✉️ ' + (document.getElementById('email').value || 'Email');
+      document.getElementById('previewTelegram').textContent = '🔗 ' + (document.getElementById('telegram').value || 'Telegram');
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      html2canvas(document.getElementById('cardPreview')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'vizitka.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
+  </script>
+</body>
+</html>
